@@ -6,9 +6,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.beans.Expression;
 import java.io.File;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class PR142Main {
@@ -100,7 +98,8 @@ public class PR142Main {
 
     public static String mostrarModuls(String idCurs, XPath xPath, Document document) throws XPathExpressionException {
         return makeQuery(xPath,
-                "/cursos/curs[@id='AMS2']/moduls/modul/@id | /cursos/curs[@id='AMS2']/moduls/modul/titol",
+                "/cursos/curs[@id='" + idCurs + "']/moduls/modul/@id | " +
+                        "/cursos/curs[@id='" + idCurs + "']/moduls/modul/titol",
                 document,
                 0);
     }
@@ -109,11 +108,6 @@ public class PR142Main {
         sc.nextLine();
         System.out.println("ID: ");
 
-        String query = "//*[@id='" + sc.next() + "']";
-
-        if (makeQuery(xPath, query, document, 1).isEmpty()) {
-            getId(sc, xPath, document);
-        }
         return sc.next();
     }
 }
