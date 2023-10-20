@@ -15,13 +15,17 @@ public class PR142Main {
         File file = new File(path);
 
         String menu =
-                "1)Llistar id's dels cursos\n" +
-                        "2)Llistar id's dels tutors\n" +
-                        "3)Mostrar total d'alumnes\n" +
-                        "4)Mostrar modul\n" +
-                        "5)Mostrar alumnes\n" +
-                        "6)Afegir alumne\n" +
-                        "7)Eliminar alumne\n\nOption:";
+                """
+                        1)Llistar id's dels cursos
+                        2)Llistar id's dels tutors
+                        3)Mostrar total d'alumnes
+                        4)Mostrar modul
+                        5)Mostrar alumnes
+                        6)Afegir alumne
+                        7)Eliminar alumne
+                        8)Sortir
+
+                        Option:""";
 
         Scanner sc = new Scanner(System.in);
 
@@ -72,6 +76,9 @@ public class PR142Main {
                 textResult = (String) objectResult;
 
                 break;
+            case 3:
+                objectResult = xPath.compile(query).evaluate(document, XPathConstants.NUMBER);
+                textResult = Double.toString((Double) objectResult);
         }
 
         return  textResult;
@@ -81,28 +88,55 @@ public class PR142Main {
         String id;
 
         switch (opt){
+            case 1 :
+                System.out.println(makeQuery(xPath,
+                        "//curs/@id",
+                        document,
+                        0));
+                break;
+
+            case 2 :
+                System.out.println(makeQuery(xPath,
+                        "//tutor/text()",
+                        document,
+                        0));
+                break;
+
+            case 3:
+                System.out.println(makeQuery(xPath,
+                        "count(//alumne)",
+                        document,
+                        3));
+                break;
+
             case 4 :
                 id = getId(sc, xPath, document);
-                System.out.println(mostrarModuls(id, xPath, document));
+                System.out.println(makeQuery(xPath,
+                        "/cursos/curs[@id='" + id + "']/moduls/modul/@id | " +
+                                "/cursos/curs[@id='" + id + "']/moduls/modul/titol",
+                        document,
+                        0));
 
                 break;
+
+            case 5:
+                id = getId(sc, xPath, document);
+                System.out.println(makeQuery(xPath,
+                        "//curs[@id='"+ id +"']/alumnes/alumne/text()",
+                        document,
+                        0));
         }
     }
 
     public static int getOption(Scanner sc){
         while (!sc.hasNextInt()){
+            System.out.println("Enter a valid option.");
+            sc.nextLine();
 
         }
         return sc.nextInt();
     }
 
-    public static String mostrarModuls(String idCurs, XPath xPath, Document document) throws XPathExpressionException {
-        return makeQuery(xPath,
-                "/cursos/curs[@id='" + idCurs + "']/moduls/modul/@id | " +
-                        "/cursos/curs[@id='" + idCurs + "']/moduls/modul/titol",
-                document,
-                0);
-    }
 
     public static String getId(Scanner sc, XPath xPath, Document document) throws XPathExpressionException {
         sc.nextLine();
