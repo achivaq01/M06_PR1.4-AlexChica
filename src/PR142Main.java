@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.Scanner;
 
 public class PR142Main {
+    static public boolean running = true;
     public static void main(String[] args){
         String path = "./src/cursos.xml";
         File file = new File(path);
@@ -37,7 +38,7 @@ public class PR142Main {
             XPath xpath = XPathFactory.newDefaultInstance().newXPath();
 
             int opt;
-            while (true){
+            while (running){
                 System.out.println(menu);
 
                 opt = getOption(sc);
@@ -125,6 +126,9 @@ public class PR142Main {
                         "//curs[@id='"+ id +"']/alumnes/alumne/text()",
                         document,
                         0));
+
+            case 8:
+                running = false;
         }
     }
 

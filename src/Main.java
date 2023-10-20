@@ -11,13 +11,9 @@ public class Main {
         boolean running = true;
         while (running) {
             String menu = "Escull una opció:";
-            menu = menu + "\n 0) PR120ReadFile";
-            menu = menu + "\n 1) PR121Files";
-            menu = menu + "\n 2) PR122cat";
-            menu = menu + "\n 3) PR123sobreescriu";
-            menu = menu + "\n 4) PR123append";
-            menu = menu + "\n 5) PR124linies";
-            menu = menu + "\n 6) PR125cp";
+            menu = menu + "\n 0) PR140Main";
+            menu = menu + "\n 1) PR141Main";
+            menu = menu + "\n 2) PR142Main";
             // Adapta aquí les altres classes de l’exercici (PR122cat…)
             menu = menu + "\n 100) Sortir";
             System.out.println(menu);
@@ -26,6 +22,9 @@ public class Main {
             int opcio = Integer.valueOf(llegirLinia("Opció:"));
             try {
                 switch (opcio) {
+                    case 0: PR140Main.main(args); break;
+                    case 1: PR141Main.main(args); break;
+                    case 2: PR142Main.main(args); break;
                     // Adapta aquí les altres classes de l’exercici (PR122cat…)
                     case 100: running = false; break;
                     default: break;
